@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeResume | Pro Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; /* Poore page ka scroll khatam */
+        }
+        
+        /* Scrollbar ko bilkul barik ya gayab karne ke liye */
+        ::-webkit-scrollbar {
+            width: 0px; /* Is se scrollbar nazar nahi aayega par scroll hoga */
+            background: transparent;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; overflow: visible !important; }
+            aside { display: none !important; }
+            main { width: 100% !important; padding: 0 !important; overflow: visible !important; }
+            #resumePaper { box-shadow: none !important; margin: 0 !important; border: none !important; width: 100% !important; }
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #resumePaper {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            color: #1a1a1a;
+            padding: 15mm;
+        }
+    </style>
+</head>
+<body class="bg-[#020617] text-slate-300 min-h-screen">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside class="w-[450px] p-8 overflow-y-auto border-r border-slate-800 bg-[#0f172a] h-full shadow-2xl">
+            <div class="mb-10">
+                <h1 class="text-2xl font-extrabold text-white tracking-tight">Build Resume</h1>
+                <p class="text-slate-500 text-sm">Fill in the details to see the magic.</p>
+            </div>
+            
+            <form id="resumeForm" class="space-y-6">
+                <div class="glass p-4 rounded-xl">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-blue-400 mb-3">Photo</label>
+                    <input type="file" id="imageInp" onchange="previewImage(event)" class="w-full text-xs text-slate-400 file:bg-blue-600 file:text-white file:border-0 file:px-3 file:py-1 file:rounded file:mr-4 cursor-pointer">
+                </div>
+
+                <div class="space-y-4">
+                    <input type="text" id="nameInp" oninput="syncData()" placeholder="Your Full Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <input type="text" id="titleInp" oninput="syncData()" placeholder="Job Title" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="email" id="emailInp" oninput="syncData()" placeholder="Email" class="bg-slate-900 border border-slate-700 p-3 rounded-lg text-white text-sm outline-none">
+                        <input type="text" id="phoneInp" oninput="syncData()" placeholder="Phone" class="bg-slate-900 border border-slate-700 p-3 rounded-lg text-white text-sm outline-none">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <textarea id="summaryInp" oninput="syncData()" rows="3" placeholder="Professional Summary" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <input type="text" id="eduInp" oninput="syncData()" placeholder="Education" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white outline-none">
+                    <textarea id="expInp" oninput="syncData()" rows="3" placeholder="Work Experience" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white outline-none"></textarea>
+                    <input type="text" id="skillsInp" oninput="syncData()" placeholder="Skills: HTML, CSS..." class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg text-white outline-none">
+                </div>
+
+                <div class="pt-6 space-y-3 no-print">
+                    <button type="button" onclick="saveAndGoToDashboard()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-900/20 transition-all">
+                        Save & Go to Dashboard
+                    </button>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="resetForm()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-semibold text-xs">EDIT / RESET</button>
+                        <button type="button" onclick="downloadPDF()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-semibold text-xs">DOWNLOAD PDF</button>
+                    </div>
+                </div>
+            </form>
+        </aside>
+
+        <main class="flex-1 bg-slate-950 p-10 overflow-y-auto flex justify-center h-full">
+            <div id="resumePaper" class="rounded-sm shadow-2xl relative">
+                <div class="flex items-start justify-between border-b-2 border-slate-900 pb-8">
+                    <div class="max-w-[70%]">
+                        <h1 id="outName" class="text-5xl font-extrabold text-slate-900 uppercase leading-none mb-2 tracking-tighter">Your Name</h1>
+                        <p id="outTitle" class="text-xl text-blue-600 font-semibold tracking-wide mb-4">Professional Title</p>
+                        <div class="flex gap-4 text-[10px] text-slate-500 font-bold uppercase">
+                            <span id="outEmail">email@example.com</span>
+                            <span id="outPhone">+92 000 0000000</span>
+                        </div>
+                    </div>
+                    <div class="w-28 h-28 bg-slate-100 border border-slate-200 rounded-lg overflow-hidden">
+                        <img id="outImg" src="" class="w-full h-full object-cover hidden">
+                    </div>
+                </div>
+
+                <div class="mt-10 grid grid-cols-12 gap-10">
+                    <div class="col-span-8 space-y-8">
+                        <section>
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 border-l-4 border-blue-600 pl-3">Profile</h3>
+                            <p id="outSummary" class="text-sm text-slate-700 italic">Your story begins here...</p>
+                        </section>
+                        <section>
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 border-l-4 border-blue-600 pl-3">Experience</h3>
+                            <p id="outExp" class="text-sm text-slate-700 whitespace-pre-line">Describe your work journey.</p>
+                        </section>
+                    </div>
+                    <div class="col-span-4 space-y-8">
+                        <section>
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Skills</h3>
+                            <p id="outSkills" class="text-[11px] font-bold text-slate-600 bg-slate-50 p-3 rounded-lg">Skillset</p>
+                        </section>
+                        <section>
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Education</h3>
+                            <p id="outEdu" class="text-sm text-slate-700">Academic History</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="./template.js"></script>
+</body>
+</html>

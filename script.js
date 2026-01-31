@@ -14,7 +14,7 @@ function showNotify(message, isSuccess = false) {
         myModal.hide();
         // Sirf login success par redirect hoga
         if (isSuccess && message === "Successful!") {
-            window.location.href = 'app.html';
+            window.location.href = 'dashboard.html';
         }
     }, 1000); 
 }

@@ -6,43 +6,99 @@
 }
 
 body {
-    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+    /* Dashboard background theme */
+    background-color: #11212D; 
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #CCD0CF;
 }
+
+.container-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .form-box {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 350px;
+    /* Darker background matching ForgeResume style */
+    background: #06141B; 
+    padding: 40px;
+    border-radius: 8px; /* Professional squared look */
+    border: 1px solid #253745;
+    width: 380px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
+
+h2 {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 input {
     width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
+    margin: 12px 0;
+    padding: 12px;
+    background: #11212D; /* Input background */
+    border: 1px solid #253745;
+    color: white;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.3s ease;
 }
+
+input:focus {
+    border-color: #4A5C6A;
+}
+
 button {
     width: 100%;
-    padding: 10px;
-    background: #00d2ff;
+    padding: 12px;
+    /* Primary brand color for action buttons */
+    background: #4A5C6A; 
     border: none;
-    color: white;
-    font-weight: bold;
+    color: #06141B; /* Dark text on light button */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
+    border-radius: 4px;
+    transition: 0.3s;
 }
-span { color: #00d2ff; cursor: pointer; }
 
-.modal-content {
-    border-radius: 12px;
-    background: #ffffff;
-    color: #333;
+button:hover {
+    background: #9BA8AB;
+    transform: translateY(-2px);
 }
-.modal-sm { max-width: 250px; } 
+
+p {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #9BA8AB;
+}
+
+span { 
+    color: #CCD0CF; 
+    font-weight: bold;
+    cursor: pointer; 
+    text-decoration: underline;
+}
+
+/* Modal styling matching the theme */
+.modal-content {
+    background: #06141B;
+    color: #CCD0CF;
+    border: 1px solid #253745;
+    border-radius: 8px;
+}
+
+.modal-sm { 
+    max-width: 250px; 
+}

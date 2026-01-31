@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Forget | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .brand-gradient {
+            background: linear-gradient(135deg, #11212D 0%, #06141B 100%);
+        }
+    </style>
+</head>
+<body class="bg-[#11212D] text-[#CCD0CF] min-h-screen">
+
+    <nav class="border-b border-[#253745] px-12 py-6 flex justify-between items-center bg-[#06141B]">
+        <div class="flex items-center space-x-3">
+            <div class="h-10 w-10 rounded-full bg-gradient-to-tr from-[#4A5C6A] to-[#CCD0CF] flex items-center justify-center">
+                <span class="text-[#06141B] font-black text-xl italic">R</span>
+            </div>
+            <h2 class="text-2xl font-light tracking-widest uppercase">Forge<span class="font-bold text-white">Resume</span></h2>
+        </div>
+
+        <div class="flex items-center space-x-10">
+            <button onclick="window.location.href='index.html'" class="text-xs uppercase tracking-widest font-bold px-6 py-2 border border-transparent rounded-sm transition-all duration-300 hover:bg-[#4A5C6A]/20 hover:text-white hover:border-[#253745]">
+                LogOut
+            </button>
+            
+            <button onclick="window.location.href='template.html'" class="bg-[#4A5C6A] hover:bg-[#9BA8AB] text-[#06141B] px-6 py-2 rounded-sm font-bold uppercase text-xs tracking-widest transition">
+                + New Resume
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-12 py-16">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h1 class="text-5xl font-bold text-white mb-2">Workspace</h1>
+                <p class="text-[#9BA8AB]">Manage your uploaded templates and career documents.</p>
+            </div>
+        </div>
+
+        <div id="resumes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
